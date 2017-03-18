@@ -13,6 +13,9 @@ public class App extends Application {
     @Inject
     Singleton singleton;
 
+    @Inject
+    Singleton2 singleton2;
+
     AppComponent appComponent;
 
     @Override
