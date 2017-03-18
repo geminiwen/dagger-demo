@@ -14,5 +14,7 @@ import dagger.Component;
 @javax.inject.Singleton
 public interface AppComponent {
     void inject(App app);
-    void inject(MainActivity activity);
+//    App inject(App app);
+
+    ActivityComponent.Builder provideBuilder();
 }

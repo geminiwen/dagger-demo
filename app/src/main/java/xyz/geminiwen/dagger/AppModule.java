@@ -9,7 +9,9 @@ import dagger.Provides;
  * Created by geminiwen on 2017/3/18.
  */
 
-@Module
+@Module(subcomponents = {
+        ActivityComponent.class
+})
 public class AppModule {
     Context context;
 
@@ -25,11 +27,4 @@ public class AppModule {
         return s;
     }
 
-    @Provides
-    @javax.inject.Singleton
-    Singleton2 provideSingleton2() {
-        Singleton2 s = new Singleton2();
-        s.name = "Hello Dagger2";
-        return s;
-    }
 }
