@@ -2,16 +2,18 @@ package xyz.geminiwen.dagger;
 
 import android.content.Context;
 
+import javax.inject.*;
+
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
 
 /**
  * Created by geminiwen on 2017/3/18.
  */
 
-@Module(subcomponents = {
-        ActivityComponent.class
-})
+@Module
 public class AppModule {
     Context context;
 
@@ -19,18 +21,32 @@ public class AppModule {
         this.context = context;
     }
 
-    @Provides
-    @javax.inject.Singleton
-    Singleton provideSingleton() {
-        Singleton s = new Singleton();
-        s.name = "Hello Dagger";
-        return s;
-    }
 
     @Provides
-    Singleton2 provideSingleton2() {
-        Singleton2 s = new Singleton2();
-        return s;
+    @javax.inject.Singleton
+    OkHttpClient providesOkhttp() {
+        OkHttpClient client = new OkHttpClient.Builder().build();
+        return client;
+    }
+
+    @Named("baidu")
+    @Provides
+    @javax.inject.Singleton
+    Retrofit providerBaiduRetrofit(OkHttpClient client) {
+        Retrofit.Builder builder = new Retrofit.Builder();
+        builder.baseUrl("https://api.baidu.com");
+        builder.client(client);
+        return builder.build();
+    }
+
+    @Named("google")
+    @Provides
+    @javax.inject.Singleton
+    Retrofit providerGoogleRetrofit(OkHttpClient client) {
+        Retrofit.Builder builder = new Retrofit.Builder();
+        builder.baseUrl("https://api.google.com");
+        builder.client(client);
+        return builder.build();
     }
 
 }

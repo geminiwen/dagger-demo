@@ -3,9 +3,11 @@ package xyz.geminiwen.dagger;
 import android.app.Application;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Provider;
 
 import dagger.Lazy;
+import retrofit2.Retrofit;
 
 /**
  * Created by geminiwen on 2017/3/18.
@@ -13,13 +15,13 @@ import dagger.Lazy;
 
 public class App extends Application {
 
+    @Named("baidu")
     @Inject
-    Lazy<Singleton> singletonProvider;
-    @Inject
-    Provider<Singleton2> singleton2Provider;
+    Retrofit baiduRetrofit;
 
+    @Named("google")
     @Inject
-    Lazy<Singleton2> singleton2LazyProvider;
+    Retrofit googleRetrofit;
 
     AppComponent appComponent;
 
@@ -27,22 +29,15 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         appComponent = DaggerAppComponent.builder()
-                .appModule(new AppModule(this))
+                .appModule(getAppModule())
                 .build();
 
+
         appComponent.inject(this);
+    }
 
-        
-        Object o;
-        o = singleton2Provider.get();
-        o = singleton2Provider.get();
-        o = singleton2Provider.get();
-        o = singleton2Provider.get();
-
-        o = singleton2LazyProvider.get();
-        o = singleton2LazyProvider.get();
-        o = singleton2LazyProvider.get();
-
+    public AppModule getAppModule() {
+        return new TestAppModule(this);
     }
 
     public AppComponent component() {
