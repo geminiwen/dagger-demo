@@ -3,6 +3,9 @@ package xyz.geminiwen.dagger;
 import android.app.Application;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
+
+import dagger.Lazy;
 
 /**
  * Created by geminiwen on 2017/3/18.
@@ -11,7 +14,12 @@ import javax.inject.Inject;
 public class App extends Application {
 
     @Inject
-    Singleton singleton;
+    Lazy<Singleton> singletonProvider;
+    @Inject
+    Provider<Singleton2> singleton2Provider;
+
+    @Inject
+    Lazy<Singleton2> singleton2LazyProvider;
 
     AppComponent appComponent;
 
@@ -23,6 +31,18 @@ public class App extends Application {
                 .build();
 
         appComponent.inject(this);
+
+        
+        Object o;
+        o = singleton2Provider.get();
+        o = singleton2Provider.get();
+        o = singleton2Provider.get();
+        o = singleton2Provider.get();
+
+        o = singleton2LazyProvider.get();
+        o = singleton2LazyProvider.get();
+        o = singleton2LazyProvider.get();
+
     }
 
     public AppComponent component() {

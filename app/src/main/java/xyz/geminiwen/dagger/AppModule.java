@@ -27,4 +27,10 @@ public class AppModule {
         return s;
     }
 
+    @Provides
+    Singleton2 provideSingleton2() {
+        Singleton2 s = new Singleton2();
+        return s;
+    }
+
 }
